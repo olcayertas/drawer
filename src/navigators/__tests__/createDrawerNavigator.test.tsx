@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { render } from 'react-native-testing-library';
 import { createAppContainer } from 'react-navigation';
+import { render } from '@testing-library/react-native';
 
 import createDrawerNavigator from '../createDrawerNavigator';
 

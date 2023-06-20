@@ -1,7 +1,6 @@
 /* eslint-env jest */
 
-// eslint-disable-next-line import/no-unresolved
-import NativeModules from 'NativeModules';
+import { NativeModules } from 'react-native';
 
 Object.assign(NativeModules, {
   RNGestureHandlerModule: {
@@ -64,3 +63,20 @@ jest.mock('react-native-reanimated', () => ({
     out: jest.fn(),
   },
 }));
+
+jest.mock(
+  'react-native/Libraries/Utilities/NativePlatformConstantsIOS',
+  () => ({
+    ...jest.requireActual(
+      'react-native/Libraries/Utilities/NativePlatformConstantsIOS'
+    ),
+    getConstants: () => ({
+      forceTouchAvailable: false,
+      interfaceIdiom: 'en',
+      isTesting: false,
+      osVersion: 'ios',
+      reactNativeVersion: { major: 60, minor: 1, patch: 0 },
+      systemName: 'ios',
+    }),
+  })
+);
