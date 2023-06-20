@@ -13,7 +13,7 @@ import {
   TapGestureHandler,
   State,
 } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Animated, { interpolateNode } from 'react-native-reanimated';
 import DrawerProgressContext from '../utils/DrawerProgressContext';
 
 const {
@@ -23,7 +23,6 @@ const {
   clockRunning,
   startClock,
   stopClock,
-  interpolateNode,
   spring,
   abs,
   add,
@@ -513,12 +512,16 @@ export default class Drawer extends React.PureComponent<Props> {
         { right: 0, width: open ? undefined : swipeEdgeWidth }
       : { left: 0, width: open ? undefined : swipeEdgeWidth };
 
-    // @ts-ignore
+    const isFunction = typeof interpolateNode === 'function';
+    const opacity = isFunction
+      ? interpolateNode(this.progress, {
+          inputRange: [PROGRESS_EPSILON, 1],
+          outputRange: [0, 1],
+        })
+      : 0;
+    console.info('Test-Opacity', opacity);
     const animatedStyle = {
-      opacity: interpolateNode(this.progress, {
-        inputRange: [PROGRESS_EPSILON, 1],
-        outputRange: [0, 1],
-      }),
+      opacity,
       zIndex: cond(greaterThan(this.progress, PROGRESS_EPSILON), 0, -1),
     };
 
