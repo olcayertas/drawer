@@ -12,6 +12,7 @@ import {
   DrawerContentComponentProps,
   SceneDescriptorMap,
 } from '../types';
+import { closeDrawer } from '../routers/DrawerActions';
 
 type Props = {
   contentComponent?: React.ComponentType<DrawerContentComponentProps>;
@@ -73,7 +74,7 @@ class DrawerSidebar extends React.PureComponent<Props> {
     focused: boolean;
   }) => {
     if (focused) {
-      this.props.navigation.closeDrawer();
+      this.props.navigation.dispatch(closeDrawer());
     } else {
       this.props.navigation.dispatch(
         NavigationActions.navigate({ routeName: route.routeName })

@@ -7,9 +7,7 @@ import { DrawerNavigatorItemsProps } from '../types';
 /**
  * Component that renders the navigation list in the drawer.
  */
-export default class DrawerNavigatorItems extends React.Component<
-  DrawerNavigatorItemsProps
-> {
+export default class DrawerNavigatorItems extends React.Component<DrawerNavigatorItemsProps> {
   /* Material design specs - https://material.io/guidelines/patterns/navigation-drawer.html#navigation-drawer-specs */
   static defaultProps = {
     activeTintColor: {
@@ -31,6 +29,7 @@ export default class DrawerNavigatorItems extends React.Component<
   };
 
   static contextType = ThemeContext;
+  // @ts-ignore
   context!: React.ContextType<typeof ThemeContext>;
 
   private getActiveTintColor() {

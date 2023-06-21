@@ -13,7 +13,7 @@ import {
   TapGestureHandler,
   State,
 } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Animated, { interpolateNode } from 'react-native-reanimated';
 import DrawerProgressContext from '../utils/DrawerProgressContext';
 
 const {
@@ -23,7 +23,6 @@ const {
   clockRunning,
   startClock,
   stopClock,
-  interpolate,
   spring,
   abs,
   add,
@@ -76,7 +75,7 @@ type Props = {
   open: boolean;
   onOpen: () => void;
   onClose: () => void;
-  onGestureRef?: (ref: PanGestureHandler | null) => void;
+  onGestureRef?: (ref: React.RefObject<PanGestureHandler> | null) => void;
   gestureEnabled: boolean;
   drawerPosition: 'left' | 'right';
   drawerType: 'front' | 'back' | 'slide';
@@ -279,7 +278,7 @@ export default class Drawer extends React.PureComponent<Props> {
         set(this.offsetX, 0),
         // When the animation finishes, stop the clock
         stopClock(this.clock),
-        call([this.isOpen], ([value]: ReadonlyArray<Binary>) => {
+        call([this.isOpen], ([value]: readonly Binary[]) => {
           const open = Boolean(value);
 
           if (open !== this.props.open) {
@@ -295,7 +294,7 @@ export default class Drawer extends React.PureComponent<Props> {
   private dragX = block([
     onChange(
       this.isOpen,
-      call([this.isOpen], ([value]: ReadonlyArray<Binary>) => {
+      call([this.isOpen], ([value]: readonly Binary[]) => {
         const open = Boolean(value);
 
         this.currentOpenValue = open;
@@ -335,7 +334,7 @@ export default class Drawer extends React.PureComponent<Props> {
       // Listen to updates for this value only when it changes
       // Without `onChange`, this will fire even if the value didn't change
       // We don't want to call the listeners if the value didn't change
-      call([this.isSwiping], ([value]: ReadonlyArray<Binary>) => {
+      call([this.isSwiping], ([value]: readonly Binary[]) => {
         const { keyboardDismissMode } = this.props;
 
         if (value === TRUE) {
@@ -513,6 +512,20 @@ export default class Drawer extends React.PureComponent<Props> {
         { right: 0, width: open ? undefined : swipeEdgeWidth }
       : { left: 0, width: open ? undefined : swipeEdgeWidth };
 
+    const isFunction = typeof interpolateNode === 'function';
+    const opacity = isFunction
+      ? interpolateNode(this.progress, {
+          inputRange: [PROGRESS_EPSILON, 1],
+          outputRange: [0, 1],
+        })
+      : 0;
+    console.info('Test-Opacity', opacity);
+    const animatedStyle = {
+      opacity,
+      zIndex: cond(greaterThan(this.progress, PROGRESS_EPSILON), 0, -1),
+    };
+
+    // @ts-ignore
     return (
       <DrawerProgressContext.Provider value={this.progress}>
         <PanGestureHandler
@@ -545,24 +558,7 @@ export default class Drawer extends React.PureComponent<Props> {
                 onHandlerStateChange={this.handleTapStateChange}
               >
                 <Animated.View
-                  style={[
-                    styles.overlay,
-                    {
-                      opacity: interpolate(this.progress, {
-                        inputRange: [PROGRESS_EPSILON, 1],
-                        outputRange: [0, 1],
-                      }),
-                      // We don't want the user to be able to press through the overlay when drawer is open
-                      // One approach is to adjust the pointerEvents based on the progress
-                      // But we can also send the overlay behind the screen, which works, and is much less code
-                      zIndex: cond(
-                        greaterThan(this.progress, PROGRESS_EPSILON),
-                        0,
-                        -1
-                      ),
-                    },
-                    overlayStyle,
-                  ]}
+                  style={[styles.overlay, animatedStyle, overlayStyle]}
                 />
               </TapGestureHandler>
             </Animated.View>

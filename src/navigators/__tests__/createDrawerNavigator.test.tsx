@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { render } from 'react-native-testing-library';
 import { createAppContainer } from 'react-navigation';
+import { render } from '@testing-library/react-native';
 
 import createDrawerNavigator from '../createDrawerNavigator';
 
@@ -26,88 +26,87 @@ it('renders successfully', () => {
   expect(rendered).toMatchInlineSnapshot(`
     <View
       collapsable={false}
+      forwardedRef={[Function]}
+      handlerTag={1}
+      handlerType="PanGestureHandler"
       onGestureHandlerEvent={[Function]}
       onGestureHandlerStateChange={[Function]}
       onLayout={[Function]}
       style={
-        Object {
+        {
           "flex": 1,
           "overflow": "hidden",
         }
       }
     >
       <View
+        collapsable={false}
         importantForAccessibility="yes"
+        nativeID="animatedComponent"
         style={
-          Object {
+          {
             "flex": 1,
-            "transform": Array [
-              Object {
+            "transform": [
+              {
                 "translateX": 0,
               },
             ],
           }
         }
       >
-        <View
+        <RNSScreenContainer
           style={
-            Object {
+            {
               "flex": 1,
             }
           }
         >
-          <View
+          <RNSScreen
+            activityState={2}
             collapsable={false}
-            pointerEvents="auto"
-            removeClippedSubviews={false}
+            forwardedRef={[Function]}
+            gestureResponseDistance={
+              {
+                "bottom": -1,
+                "end": -1,
+                "start": -1,
+                "top": -1,
+              }
+            }
+            nativeID="animatedComponent"
             style={
-              Array [
-                Object {
-                  "flex": 1,
-                  "overflow": "hidden",
-                },
-                Array [
-                  Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  },
-                  Object {
-                    "opacity": 1,
-                  },
-                ],
-              ]
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
             }
           >
             <View
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
-            >
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              />
-            </View>
-          </View>
-        </View>
+            />
+          </RNSScreen>
+        </RNSScreenContainer>
         <View
           collapsable={false}
+          forwardedRef={[Function]}
+          handlerTag={2}
+          handlerType="TapGestureHandler"
           onGestureHandlerEvent={[Function]}
           onGestureHandlerStateChange={[Function]}
           style={
-            Object {
+            {
               "backgroundColor": "rgba(0, 0, 0, 0.5)",
               "bottom": 0,
               "left": 0,
-              "opacity": undefined,
+              "opacity": 0,
               "position": "absolute",
               "right": 0,
               "top": 0,
@@ -118,19 +117,21 @@ it('renders successfully', () => {
       </View>
       <View
         accessibilityViewIsModal={false}
+        collapsable={false}
+        nativeID="animatedComponent"
         onLayout={[Function]}
         removeClippedSubviews={false}
         style={
-          Object {
+          {
             "backgroundColor": "#fff",
             "bottom": 0,
             "left": undefined,
             "maxWidth": "100%",
-            "opacity": Object {},
+            "opacity": {},
             "position": "absolute",
             "top": 0,
-            "transform": Array [
-              Object {
+            "transform": [
+              {
                 "translateX": undefined,
               },
             ],
@@ -141,8 +142,8 @@ it('renders successfully', () => {
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "flex": 1,
               },
               undefined,
@@ -154,10 +155,13 @@ it('renders successfully', () => {
           >
             <View>
               <View
+                collapsable={false}
+                forwardedRef={[Function]}
+                nativeID="animatedComponent"
                 onLayout={[Function]}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "paddingBottom": 0,
                     "paddingLeft": 0,
                     "paddingRight": 0,
@@ -167,8 +171,8 @@ it('renders successfully', () => {
               >
                 <View
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "paddingVertical": 4,
                       },
                       undefined,
@@ -178,7 +182,10 @@ it('renders successfully', () => {
                   <View
                     accessibilityLabel="Welcome anonymous"
                     accessible={true}
-                    isTVSelectable={true}
+                    collapsable={false}
+                    focusable={true}
+                    nativeID="animatedComponent"
+                    onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
                     onResponderRelease={[Function]}
@@ -186,16 +193,19 @@ it('renders successfully', () => {
                     onResponderTerminationRequest={[Function]}
                     onStartShouldSetResponder={[Function]}
                     style={
-                      Object {
+                      {
                         "opacity": 1,
                       }
                     }
                   >
                     <View
+                      collapsable={false}
+                      forwardedRef={[Function]}
+                      nativeID="animatedComponent"
                       onLayout={[Function]}
                       pointerEvents="box-none"
                       style={
-                        Object {
+                        {
                           "alignItems": "center",
                           "backgroundColor": "rgba(0, 0, 0, .04)",
                           "flexDirection": "row",
@@ -208,12 +218,12 @@ it('renders successfully', () => {
                     >
                       <Text
                         style={
-                          Array [
-                            Object {
+                          [
+                            {
                               "fontWeight": "bold",
                               "margin": 16,
                             },
-                            Object {
+                            {
                               "color": "#2196f3",
                             },
                             undefined,
